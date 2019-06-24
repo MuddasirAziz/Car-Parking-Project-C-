@@ -1,1 +1,275 @@
-https://github.com/MuddasirAziz/Car-Parking-Project-C-.git
+#include<iostream>
+#include<string>
+#include<cstring>
+#include<iomanip>
+#include<istream>
+#include<cmath>
+#include<ctime>
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<cstdlib>
+#include<new>
+
+using namespace std;
+struct parking
+{
+string name;
+int num;
+int time1;
+int time2;
+};
+int entrys();
+int entryl();
+int exit1(int cnoe);
+void del();
+void searchcar(int cno,string carown);
+void whole();
+void appexit();
+void csearch(int tin, int tout);
+//void clrscr(int size=20);
+
+int amount=0;
+    int sum=0;
+    int cmax=0;
+parking s1[10];
+
+main()
+   {
+    time_t now;            // for time
+    struct tm nowlocal;   // for time
+    int u_input=0;
+    int cnom;
+    string ownername;
+now =time(NULL); // get the time from the OS
+nowlocal = *localtime(&now);
+     while(cmax!=10)
+    {
+        tag:
+ cout<<"Today is: "<<nowlocal.tm_mday << " "<<nowlocal.tm_mon+1<<" "<<nowlocal.tm_year+1900<<endl;
+ cout<<"Current Time is: "<<nowlocal.tm_hour << ":"<<nowlocal.tm_min<<endl;
+ cout <<"***********************************************************"<<endl;
+ cout <<"press 1 for Small vehicle :"<<endl;
+ cout <<"Press 2 for large vehicle :"<<endl;;
+ cout <<"Press 3 for see the whole record :"<<endl;
+ cout <<"Press 4 for deleted whole record :"<<endl;
+ cout <<"Press 5 For search Record :"<<endl;
+ cout <<"Press 6 for Car Out Time :"<<endl;
+ cout <<"Press 7 for Customized Search :"<<endl;
+ cout <<"Press 8 for EXIT Application :"<<endl;
+ cin >>u_input;
+ if (cin.fail())
+    {
+ cout <<"***********************************************************"<<endl;
+ cout<<"You input is not matched with given criteria OR Alphabetic was entered"<<endl;
+ cout <<"***********************************************************"<<endl;
+ cin.clear();
+ cin.ignore(1);
+ goto tag;
+ }
+ cout <<"***********************************************************"<<endl;
+
+switch(u_input)
+{
+case 1:
+{
+        if (entrys()==1)
+        cout <<"THE DATA ENTERED SUCCESFULLY"<<endl;
+        cout <<"***********************************************************"<<endl;
+//        clrscr();
+        break;
+}
+case 2:
+{
+     if (entryl()==1)
+        cout <<"THE DATA ENTERED SUCCESFULLY"<<endl;
+        cout <<"***********************************************************"<<endl;
+         break;
+}
+case 3:
+{
+    whole();
+     break;
+}
+case 4:
+{
+    del();
+     break;
+}
+case 5:
+
+{
+int no;
+int dummy=999999999;
+string dummy1="0";
+cout <<"PLEASE ENTER \"1\" BY NUMBER OR \"2\" BY CAR OWNER NAME";
+cin>>no;
+if(no==1)
+    {cout <<"ENTER THE CAR NUMBER: ";
+    cin>>cnom;
+      searchcar(cnom,dummy1);
+    }
+else if(no==2)
+    {cout <<"ENTER THE CAR OWNER NAME: ";
+    cin>> ownername;
+    searchcar(dummy,ownername);
+    }
+     break;
+}
+case 6:
+{
+    cout <<"ENTER THE CAR NUMBER: ";
+    cin>>cnom;
+    if (exit1(cnom)==1)
+        cout <<"THE DATA ENTERED SUCCESFULLY"<<endl;
+        cout <<"***********************************************************"<<endl;
+         break;
+}
+case 8:
+{
+    appexit();
+    break;
+}
+case 7:
+{
+    int timein;
+    int timeout;
+    cout<<"Please enter the 1ST time of Vehicle in 24 Hrs Formate: " <<endl;
+    cin>>timein;
+    cout<<"Please enter the 2ND time of Vehicle in 24 Hrs Formate: " <<endl;
+    cin>>timeout;
+    csearch(timein, timeout);
+    break;
+}
+default:
+{
+    cout <<"YOU HAVE ENTERED INVALID NUMBER"<<endl;
+    cout <<"***********************************************************"<<endl;
+}
+
+
+    }
+    }
+return 0;
+}
+
+int entrys()
+{
+       cout << "ENTER Car Owner Name :"<<endl;
+       cin>>s1[cmax].name;
+       cout << "ENTER Car Number :"<<endl;
+       cin >>s1[cmax].num;
+       cout << "TIME SHOULD BE IN 24 HRS FORMAT:  ENTER THE TIME In :"<<endl;
+       cin >>s1[cmax].time1;
+       cout <<"***********************************************************"<<endl;
+       sum++;
+       amount=amount + 100;
+     cmax++;
+     //cin.ignore();
+     return (1);
+}
+
+int entryl()
+{
+        cout << "ENTER Car Owner Name :"<<endl;
+        cin>>s1[cmax].name;
+       cout << "ENTER Car Number :"<<endl;
+       cin >>s1[cmax].num;
+       cout << "TIME SHOULD BE IN 24 HRS FORMAT: ENTER THE TIME In :"<<endl;
+       cin >>s1[cmax].time1;
+       cout <<"***********************************************************"<<endl;
+       sum++;
+       cmax++;
+       amount=+200;
+
+       return(1);
+        cin.ignore();
+}
+int exit1(int cnoe)
+{
+    for(int i=0;i<=cmax;i++)
+    {
+        if(cnoe==s1[i].num)
+        {
+            cout <<"ENTER THE TIME OUT";
+            cin>> s1[i].time2;
+        }
+    }
+return (1);
+}
+void del()
+{
+    for (int i=0; i<=cmax; i++)
+         {
+         s1[i].time1='\0',s1[i].time2='\0',s1[i].num=0,s1[i].name='\0';
+          sum=0;
+          amount=0;
+     }
+    cmax=0;
+}
+void whole()
+{
+cout << "THE DETAILS ARE AS FOLLOW"<<endl;
+cout <<"***********************************************************"<<endl;
+cmax--;
+for (int i=0; i<=cmax; i++)
+    {
+cout <<"***********************************************************"<<endl;
+cout <<"Serial No:                           "<<i+1<<endl;
+cout<<"Total Numbers oF Cars Available:     "<<sum<<endl;
+cout<<"OWNERS NAME:                         "<<s1[i].name<<endl;
+cout<<"CAR NUMBER:                          "<< s1[i].num<<endl;
+cout<<"AMOUNT HE/SHE PAID:                  "<<amount<<endl;
+cout<<"TIME WHEN CAR ENTERTED:              "<<s1[i].time1<<endl;
+cout<<"TIME WHEN CAR OUT:                   "<<s1[i].time2<<endl;
+cout <<"***********************************************************"<<endl;
+}
+cmax++;
+}
+
+void searchcar(int cno,string carown)
+{
+    for(int i=0; i<=cmax; i++)
+    {
+        if(cno==s1[i].num || carown==s1[i].name)
+    {
+cout <<"***********************************************************"<<endl;
+cout <<"Serial No:                           "<<i+1<<endl;
+cout<<"Total Numbers oF Cars Available:     "<<sum<<endl;
+cout<<"OWNERS NAME:                         "<<s1[i].name<<endl;
+cout<<"CAR NUMBER:                          "<< s1[i].num<<endl;
+cout<<"AMOUNT HE/SHE PAID:                  "<<amount<<endl;
+cout<<"TIME WHEN CAR ENTERTED:              "<<s1[i].time1<<endl;
+cout<<"TIME WHEN CAR OUT:                   "<<s1[i].time2<<endl;
+cout <<"***********************************************************"<<endl;
+}
+
+}
+}
+
+void appexit()
+{
+    cmax=10;
+}
+void csearch(int tin, int tout)
+{
+ for(int i=0; i<=cmax; i++)
+    {
+        if(tin<=s1[i].time1 && s1[i].time1<=tout)
+    {
+cout <<"***********************************************************"<<endl;
+cout <<"Serial No:                          "<<i+1<<endl;
+cout<<"Total Numbers oF Cars Available:     "<<sum<<endl;
+cout<<"OWNERS NAME:                         "<<s1[i].name<<endl;
+cout<<"CAR NUMBER:                          "<< s1[i].num<<endl;
+cout<<"AMOUNT HE/SHE PAID:                  "<<amount<<endl;
+cout<<"TIME WHEN CAR ENTERTED:              "<<s1[i].time1<<endl;
+cout<<"TIME WHEN CAR OUT:                   "<<s1[i].time2<<endl;
+cout <<"***********************************************************"<<endl;
+}
+
+
+    }
+}
+
+
